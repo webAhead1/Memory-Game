@@ -1,8 +1,7 @@
 import React from 'react';
 import Images from './images';
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {shuffle} from 'lodash';
-import CountDown from './CountDown';
 
 function App() {
     const [cards,setCards] = useState( shuffle([...Images, ...Images]) );
@@ -10,9 +9,21 @@ function App() {
     const [won,setWon] = useState(false);
     const [activeCards,setActiveCards] = useState([]);
     const [foundPairs,setFoundPairs] = useState([]);
+    const [count, setCount] = useState(100);
 
-    let onTimesup = () => {
-      alert(`Time's up!`)
+    useEffect(() => {
+      setInterval(() => {
+        setCount(prevCount => prevCount - 20);
+      }, 1000);
+    }, []);
+
+    function startOver() {
+      setCards(shuffle([...Images, ...Images]));
+        setFoundPairs([]);
+        setWon(false);
+        setClicks(0);
+        setCount(100);
+        setActiveCards([]);
     }
 
     function flipCard(index) {
@@ -21,6 +32,10 @@ function App() {
         setFoundPairs([]);
         setWon(false);
         setClicks(0);
+        setCount(100);
+      }
+      if (count==0) {
+        alert("GAME OVER!")
       }
       if (activeCards.length === 0) {
         setActiveCards([index]);
@@ -70,10 +85,12 @@ function App() {
           Clicks: {clicks} &nbsp;&nbsp;&nbsp;
           Found pairs:{foundPairs.length/2}
           <br />
-          Timer: <CountDown
-            onTimesup={onTimesup}
-            duration={60}
-          />
+          Timer: {count}
+          <br />
+          <button onClick={startOver}>
+          Start Over
+          </button>
+
         </div>
       </div>
     );
