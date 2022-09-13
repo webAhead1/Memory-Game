@@ -12,10 +12,19 @@ function App() {
     const [count, setCount] = useState(100);
 
     useEffect(() => {
+      if (count > 0) {
       setInterval(() => {
+        // setCount(prevCount => (prevCount > 0 ? prevCount - 20 : prevCount));
         setCount(prevCount => prevCount - 20);
-      }, 1000);
+      }, 1000);}
+      else {
+        setCount(0);
+      }
     }, []);
+
+    if (count==0) {
+      alert("GAME OVER!")
+    }
 
     function startOver() {
       setCards(shuffle([...Images, ...Images]));
@@ -34,9 +43,7 @@ function App() {
         setClicks(0);
         setCount(100);
       }
-      if (count==0) {
-        alert("GAME OVER!")
-      }
+    
       if (activeCards.length === 0) {
         setActiveCards([index]);
       }
