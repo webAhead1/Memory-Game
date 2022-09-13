@@ -2,6 +2,7 @@ import React from 'react';
 import Images from './images';
 import {useState} from "react";
 import {shuffle} from 'lodash';
+import CountDown from './CountDown';
 
 function App() {
     const [cards,setCards] = useState( shuffle([...Images, ...Images]) );
@@ -9,7 +10,11 @@ function App() {
     const [won,setWon] = useState(false);
     const [activeCards,setActiveCards] = useState([]);
     const [foundPairs,setFoundPairs] = useState([]);
-  
+
+    let onTimesup = () => {
+      alert(`Time's up!`)
+    }
+
     function flipCard(index) {
       if (won) {
         setCards(shuffle([...Images, ...Images]));
@@ -34,9 +39,10 @@ function App() {
       if (activeCards.length === 2) {
         setActiveCards([index]);
       }
-      setClicks(clicks + 1);
+      if(!won) {
+        setClicks(clicks + 1);
+      }
     }
-  
     return (
       <div>
         <div className="board">
@@ -61,7 +67,13 @@ function App() {
               Click any card to play again.<br /><br />
             </>
           )}
-          Clicks: {clicks} &nbsp;&nbsp;&nbsp; Found pairs:{foundPairs.length/2}
+          Clicks: {clicks} &nbsp;&nbsp;&nbsp;
+          Found pairs:{foundPairs.length/2}
+          <br />
+          Timer: <CountDown
+            onTimesup={onTimesup}
+            duration={60}
+          />
         </div>
       </div>
     );
