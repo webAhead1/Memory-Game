@@ -13,19 +13,11 @@ function App() {
   const [count, setCount] = useState(60);
 
   useEffect(() => {
-    if (count > 0) {
-      setInterval(() => {
-        // setCount(prevCount => (prevCount > 0 ? prevCount - 20 : prevCount));
-        setCount((prevCount) => prevCount - 1);
-      }, 1000);
-    } else {
-      setCount(0);
-    }
+    setInterval(() => {
+      setCount((prevCount) => (prevCount > 0 ? prevCount - 20 : prevCount));
+      // setCount((prevCount) => prevCount - 1);
+    }, 1000);
   }, []);
-
-  if (count == 0) {
-    alert("GAME OVER!");
-  }
 
   function startOver() {
     setCards(shuffle([...Images, ...Images]));
@@ -42,7 +34,8 @@ function App() {
       setFoundPairs([]);
       setWon(false);
       setClicks(0);
-      setCount(60);
+      setCount(100);
+      setActiveCards([]);
     }
 
     if (activeCards.length === 0) {
@@ -74,11 +67,11 @@ function App() {
             <>
               You won the game! Congratulations!
               <br />
-              Click any card to play again.
-              <br />
               <br />
             </>
           )}
+          {count === 0 && <> Time ran out! You lost the game</>}
+          <br />
           Clicks: {clicks}
           <br />
           <br />
