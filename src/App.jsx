@@ -10,29 +10,21 @@ function App() {
     const [activeCards,setActiveCards] = useState([]);
     const [foundPairs,setFoundPairs] = useState([]);
     const [count, setCount] = useState(100);
-
+   
     useEffect(() => {
-      if (count > 0) {
       setInterval(() => {
-        // setCount(prevCount => (prevCount > 0 ? prevCount - 20 : prevCount));
-        setCount(prevCount => prevCount - 20);
-      }, 1000);}
-      else {
-        setCount(0);
-      }
+        setCount(prevCount => (prevCount > 0 ? prevCount - 20 : prevCount));
+        // setCount(prevCount => (prevCount - 20))
+      }, 1000);
     }, []);
-
-    if (count==0) {
-      alert("GAME OVER!")
-    }
 
     function startOver() {
       setCards(shuffle([...Images, ...Images]));
-        setFoundPairs([]);
-        setWon(false);
-        setClicks(0);
-        setCount(100);
-        setActiveCards([]);
+      setFoundPairs([]);
+      setWon(false);
+      setClicks(0);
+      setCount(100);
+      setActiveCards([]);
     }
 
     function flipCard(index) {
@@ -85,9 +77,14 @@ function App() {
         </div>
         <div className="stats">
           {won && (
-            <>You won the game! Congratulations!<br />
-              Click any card to play again.<br /><br />
+            <>You won the game! Congratulations!
+              <br /><br />
             </>
+          )}
+          {count==0 && (
+            <>Time ran out! You lost the game!
+            <br /><br />
+          </>
           )}
           Clicks: {clicks} &nbsp;&nbsp;&nbsp;
           Found pairs:{foundPairs.length/2}
@@ -97,7 +94,6 @@ function App() {
           <button onClick={startOver}>
           Start Over
           </button>
-
         </div>
       </div>
     );
