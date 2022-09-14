@@ -13,7 +13,7 @@ function App() {
    
     useEffect(() => {
       setInterval(() => {
-        setCount(prevCount => (prevCount > 0 ? prevCount - 20 : prevCount));
+        setCount(prevCount => (prevCount > 0 ? prevCount - 1 : prevCount));
         // setCount(prevCount => (prevCount - 20))
       }, 1000);
     }, []);
