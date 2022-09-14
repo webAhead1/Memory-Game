@@ -9,10 +9,12 @@ function App() {
     const [won,setWon] = useState(false);
     const [activeCards,setActiveCards] = useState([]);
     const [foundPairs,setFoundPairs] = useState([]);
+   // const [running, setRunning] = useState(false);
     const [count, setCount] = useState(100);
+    var intervalId;
    
     useEffect(() => {
-      setInterval(() => {
+      intervalId = setInterval(() => {
         setCount(prevCount => (prevCount > 0 ? prevCount - 1 : prevCount));
         // setCount(prevCount => (prevCount - 20))
       }, 1000);
@@ -23,6 +25,7 @@ function App() {
       setFoundPairs([]);
       setWon(false);
       setClicks(0);
+     // setRunning(true);
       setCount(100);
       setActiveCards([]);
     }
@@ -33,11 +36,14 @@ function App() {
         setFoundPairs([]);
         setWon(false);
         setClicks(0);
-        setCount(100);
+        //setRunning(false);
+        setCount(0);
+      
       }
     
       if (activeCards.length === 0) {
         setActiveCards([index]);
+        
       }
       if (activeCards.length === 1) {
         const firstIndex = activeCards[0];
@@ -45,6 +51,10 @@ function App() {
         if (cards[firstIndex] === cards[secondsIndex]) {
           if (foundPairs.length + 2 === cards.length) {
             setWon(true);
+            console.log({intervalId});
+            alert(5)
+    
+            clearInterval(intervalId);
           }
           setFoundPairs( [...foundPairs, firstIndex, secondsIndex] );
         }
