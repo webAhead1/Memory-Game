@@ -10,13 +10,13 @@ function App() {
   const [won, setWon] = useState(false);
   const [activeCards, setActiveCards] = useState([]);
   const [foundPairs, setFoundPairs] = useState([]);
-  //const [running, setRunning] = useState(false);
-  const [count, setCount] = useState(60);
-
+  // const [running, setRunning] = useState(false);
+  const [count, setCount] = useState(100);
   var intervalId;
+
   useEffect(() => {
     intervalId = setInterval(() => {
-      setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : prevCount));
+      setCount((prevCount) => (prevCount > 0 ? prevCount - 20 : prevCount));
     }, 1000);
   }, []);
 
@@ -29,16 +29,17 @@ function App() {
     setActiveCards([]);
   }
 
-  function flipCard(index) {
-    if (won) {
-      setCards(shuffle([...Images, ...Images]));
-      setFoundPairs([]);
-      setWon(false);
-      setClicks(0);
-      //setRunning(false);
-      setCount(0);
-    }
+  if (won) {
+    // setCards(shuffle([...Images, ...Images]));
+    // setFoundPairs([]);
+    // setWon(false);
+    // setClicks(0);
+    //setRunning(false);
+    // setCount(0);
+    // showModal();
+  }
 
+  function flipCard(index) {
     if (activeCards.length === 1) {
       const firstIndex = activeCards[0];
       const secondsIndex = index;
@@ -113,24 +114,26 @@ function App() {
       </div>
       <div className="statsPane">
         <div className="stats">
-          {won && (
-            <>
-              You won the game! Congratulations!
-              <br />
-              <br />
-            </>
-          )}
-          {count === 0 && <> Time ran out! You lost the game</>}
-          <br />
           Clicks: {clicks}
           <br />
           <br />
-          Found pairs:
-          {foundPairs.length / 2}
+          Found pairs: {foundPairs.length / 2}
           <br />
           <br />
           Timer: {count}
           <br />
+          <br />
+          <br />
+          {won && (
+            <>
+              <p>Well done! You won the game!</p>
+            </>
+          )}
+          {count === 0 && (
+            <>
+              <p>Time ran out! you lost..</p>
+            </>
+          )}
         </div>
         <div className="statsBackground">
           <img src={statsBackground} className="statsBackroundImg" alt="..." />
