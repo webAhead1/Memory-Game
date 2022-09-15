@@ -5,21 +5,21 @@ import { shuffle } from "lodash";
 import statsBackground from "./images/statsBackground.png";
 
 function App() {
-    const [cards,setCards] = useState( shuffle([...Images, ...Images]) );
-    const [clicks,setClicks] = useState(0);
-    const [won,setWon] = useState(false);
-    const [activeCards,setActiveCards] = useState([]);
-    const [foundPairs,setFoundPairs] = useState([]);
-   // const [running, setRunning] = useState(false);
-    const [count, setCount] = useState(100);
-    var intervalId;
-   
-    useEffect(() => {
-      intervalId = setInterval(() => {
-        setCount(prevCount => (prevCount > 0 ? prevCount - 1 : prevCount));
-        // setCount(prevCount => (prevCount - 20))
-      }, 1000);
-    }, []);
+  const [cards, setCards] = useState(shuffle([...Images, ...Images]));
+  const [clicks, setClicks] = useState(0);
+  const [won, setWon] = useState(false);
+  const [activeCards, setActiveCards] = useState([]);
+  const [foundPairs, setFoundPairs] = useState([]);
+  // const [running, setRunning] = useState(false);
+  const [count, setCount] = useState(100);
+  var intervalId;
+
+  useEffect(() => {
+    intervalId = setInterval(() => {
+      setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : prevCount));
+      // setCount(prevCount => (prevCount - 20))
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     setInterval(() => {
@@ -43,52 +43,33 @@ function App() {
       setFoundPairs([]);
       setWon(false);
       setClicks(0);
-     // setRunning(true);
-      setCount(100);
-      setActiveCards([]);
+      //setRunning(false);
+      setCount(0);
     }
 
-<<<<<<< HEAD
-    function flipCard(index) {
-      if (won) {
-        setCards(shuffle([...Images, ...Images]));
-        setFoundPairs([]);
-        setWon(false);
-        setClicks(0);
-        //setRunning(false);
-        setCount(0);
-      
-      }
-    
-      if (activeCards.length === 0) {
-        setActiveCards([index]);
-        
-      }
-      if (activeCards.length === 1) {
-        const firstIndex = activeCards[0];
-        const secondsIndex = index;
-        if (cards[firstIndex] === cards[secondsIndex]) {
-          if (foundPairs.length + 2 === cards.length) {
-            setWon(true);
-            console.log({intervalId});
-            alert(5)
-    
-            clearInterval(intervalId);
-          }
-          setFoundPairs( [...foundPairs, firstIndex, secondsIndex] );
+    if (activeCards.length === 1) {
+      const firstIndex = activeCards[0];
+      const secondsIndex = index;
+      if (cards[firstIndex] === cards[secondsIndex]) {
+        if (foundPairs.length + 2 === cards.length) {
+          setWon(true);
+          console.log({ intervalId });
+          alert(5);
+
+          clearInterval(intervalId);
         }
-        setActiveCards([...activeCards, index]);
+        setFoundPairs([...foundPairs, firstIndex, secondsIndex]);
       }
-      if (activeCards.length === 2) {
-        setActiveCards([index]);
-      }
-      if(!won) {
-        setClicks(clicks + 1);
-      }
-=======
+      setActiveCards([...activeCards, index]);
+    }
+    if (activeCards.length === 2) {
+      setActiveCards([index]);
+    }
+    if (!won) {
+      setClicks(clicks + 1);
+    }
     if (activeCards.length === 0) {
       setActiveCards([index]);
->>>>>>> 306c539a7696bd4214dd58540d41ee9f8d51732c
     }
     if (activeCards.length === 1) {
       const firstIndex = activeCards[0];
