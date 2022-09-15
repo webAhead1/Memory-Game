@@ -15,19 +15,12 @@ function App() {
 
   var intervalId;
 
-  useEffect(() => {
-    setInterval(() => {
-      setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : prevCount));
-      // setCount((prevCount) => prevCount - 1);
-    }, 1000);
-  }, []);
-
   function startOver() {
     setCards(shuffle([...Images, ...Images]));
     setFoundPairs([]);
     setWon(false);
     setClicks(0);
-    setCount(60);
+    setCount(100);
     setActiveCards([]);
   }
 
