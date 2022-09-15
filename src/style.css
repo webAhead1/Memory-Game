@@ -51,6 +51,7 @@ body {
 }
 
 .stats {
+  font-family: "Irish Grover";
   width: 400px;
   z-index: 1;
   text-align: center;
@@ -69,16 +70,8 @@ body {
   margin-top: 50px;
 }
 .statsPane {
-  margin-left: 550px;
+  margin-left: 600px;
   position: absolute;
-}
-.startButton {
-  background-color: #000;
-  color: #fbb040;
-  margin-top: 330px;
-  margin-left: 210px;
-  border: none;
-  font-size: 24px;
 }
 .game {
   margin: 40px;
@@ -87,8 +80,24 @@ body {
   color: #00b0ad;
 }
 h1 {
+  font-family: "Irish Grover";
   position: absolute;
   margin-top: -15px;
   z-index: 4;
-  font-size: 69px;
+  font-size: 59px;
+}
+.startButton button {
+  cursor: pointer;
+  font-family: "Irish Grover";
+  position: absolute;
+  background-color: #000;
+  border: none;
+  color: #fbb040;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+  right: 255px;
+  bottom: 127px;
 }

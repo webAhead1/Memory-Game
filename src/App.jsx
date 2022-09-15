@@ -83,6 +83,17 @@ function App() {
   }
   return (
     <div className="game">
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,400;1,300&display=swap"
+        rel="stylesheet"
+      ></link>
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="//fonts.googleapis.com/css?family=Irish+Grover"
+      />
       <div className="gameName">
         <h1>
           M<br />
@@ -96,6 +107,9 @@ function App() {
           A<br />
           M<br />E
         </h1>
+      </div>
+      <div className="startButton">
+        <button onClick={startOver}>Start Over</button>
       </div>
       <div className="statsPane">
         <div className="stats">
@@ -117,9 +131,6 @@ function App() {
           <br />
           Timer: {count}
           <br />
-          <div className="startButton">
-            <button onClick={startOver}>Start Over</button>
-          </div>
         </div>
         <div className="statsBackground">
           <img src={statsBackground} className="statsBackroundImg" alt="..." />
