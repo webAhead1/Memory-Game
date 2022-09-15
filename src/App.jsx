@@ -3,6 +3,8 @@ import Images from "./images";
 import { useState, useEffect } from "react";
 import { shuffle } from "lodash";
 import statsBackground from "./images/statsBackground.png";
+import { Button, Modal } from 'antd';
+import 'antd/dist/antd.css';
 
 function App() {
   const [cards, setCards] = useState(shuffle([...Images, ...Images]));
@@ -12,14 +14,26 @@ function App() {
   const [foundPairs, setFoundPairs] = useState([]);
   // const [running, setRunning] = useState(false);
   const [count, setCount] = useState(100);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   var intervalId;
 
   useEffect(() => {
     intervalId = setInterval(() => {
       setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : prevCount));
-      // setCount(prevCount => (prevCount - 20))
     }, 1000);
   }, []);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   function startOver() {
     setCards(shuffle([...Images, ...Images]));
@@ -30,16 +44,17 @@ function App() {
     setActiveCards([]);
   }
 
-  function flipCard(index) {
-    if (won) {
-      setCards(shuffle([...Images, ...Images]));
-      setFoundPairs([]);
-      setWon(false);
-      setClicks(0);
-      //setRunning(false);
-      setCount(0);
-    }
+  if (won) {
+    // setCards(shuffle([...Images, ...Images]));
+    // setFoundPairs([]);
+    // setWon(false);
+    // setClicks(0);
+    //setRunning(false);
+    // setCount(0);
+    // showModal();
+  }
 
+  function flipCard(index) {
     if (activeCards.length === 1) {
       const firstIndex = activeCards[0];
       const secondsIndex = index;
@@ -87,12 +102,16 @@ function App() {
         <div className="stats">
           {won && (
             <>
-              You won the game! Congratulations!
-              <br />
-              <br />
+            {/* <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}> */}
+            <p>Well done! You won the game!</p>
+            {/* </Modal> */}
             </>
           )}
-          {count === 0 && <> Time ran out! You lost the game</>}
+          {count === 0 && <> 
+          <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <p>Time ran out! you lost..</p>
+          </Modal>
+          </>}
           <br />
           Clicks: {clicks}
           <br />
