@@ -2,6 +2,8 @@ import React from 'react';
 import Images from './images';
 import {useState, useEffect} from "react";
 import {shuffle} from 'lodash';
+import { Button, Modal } from 'antd';
+import 'antd/dist/antd.css';
 
 function App() {
     const [cards,setCards] = useState( shuffle([...Images, ...Images]) );
@@ -10,6 +12,7 @@ function App() {
     const [activeCards,setActiveCards] = useState([]);
     const [foundPairs,setFoundPairs] = useState([]);
     const [count, setCount] = useState(100);
+    const [isModalOpen, setIsModalOpen] = useState();
    
     useEffect(() => {
       setInterval(() => {
@@ -27,6 +30,18 @@ function App() {
       setActiveCards([]);
     }
 
+    const showModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    const handleOk = () => {
+      setIsModalOpen(false);
+    };
+  
+    const handleCancel = () => {
+      setIsModalOpen(false);
+    };
+
     function flipCard(index) {
       if (won) {
         setCards(shuffle([...Images, ...Images]));
@@ -34,6 +49,7 @@ function App() {
         setWon(false);
         setClicks(0);
         setCount(100);
+        showModal();
       }
     
       if (activeCards.length === 0) {
@@ -59,6 +75,11 @@ function App() {
     }
     return (
       <div>
+        <Modal className='modalMessage' title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
         <div className="board">
           {cards.map((card,index) => {
             const flippedToFront =  (activeCards.indexOf(index) !== -1) || foundPairs.indexOf(index) !== -1;
@@ -94,6 +115,9 @@ function App() {
           <button onClick={startOver}>
           Start Over
           </button>
+          <Button type="primary" onClick={showModal}>
+          Open Modal
+          </Button>
         </div>
       </div>
     );

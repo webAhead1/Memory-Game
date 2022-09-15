@@ -43,7 +43,6 @@ body{
     transform:rotateY(0);
 }
 
-
 .stats{
     width: 400px;
     margin: 0 auto;
@@ -52,4 +51,9 @@ body{
     padding: 20px 0;
     font-size: 2rem;
 }
-
+/* 
+.modalMessage {
+    position: absolute;
+    top: 5rem;
+    background: whitesmoke;
+} */
