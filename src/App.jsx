@@ -10,7 +10,7 @@ function App() {
   const [won, setWon] = useState(false);
   const [activeCards, setActiveCards] = useState([]);
   const [foundPairs, setFoundPairs] = useState([]);
-  // const [running, setRunning] = useState(false);
+  //const [running, setRunning] = useState(false);
   const [count, setCount] = useState(60);
 
   var intervalId;
@@ -20,7 +20,7 @@ function App() {
     setFoundPairs([]);
     setWon(false);
     setClicks(0);
-    setCount(100);
+    setCount(60);
     setActiveCards([]);
   }
 
@@ -112,7 +112,7 @@ function App() {
           <br />
           Timer: {count}
           <br />
-          <div className="button">
+          <div className="startButton">
             <button onClick={startOver}>Start Over</button>
           </div>
         </div>
