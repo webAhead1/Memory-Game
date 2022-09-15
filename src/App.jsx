@@ -14,6 +14,11 @@ function App() {
   const [count, setCount] = useState(60);
 
   var intervalId;
+  useEffect(() => {
+    intervalId = setInterval(() => {
+      setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : prevCount));
+    }, 1000);
+  }, []);
 
   function startOver() {
     setCards(shuffle([...Images, ...Images]));
