@@ -11,15 +11,9 @@ function App() {
   const [activeCards, setActiveCards] = useState([]);
   const [foundPairs, setFoundPairs] = useState([]);
   // const [running, setRunning] = useState(false);
-  const [count, setCount] = useState(100);
-  var intervalId;
+  const [count, setCount] = useState(60);
 
-  useEffect(() => {
-    intervalId = setInterval(() => {
-      setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : prevCount));
-      // setCount(prevCount => (prevCount - 20))
-    }, 1000);
-  }, []);
+  var intervalId;
 
   useEffect(() => {
     setInterval(() => {
@@ -54,7 +48,6 @@ function App() {
         if (foundPairs.length + 2 === cards.length) {
           setWon(true);
           console.log({ intervalId });
-          alert(5);
 
           clearInterval(intervalId);
         }
@@ -65,6 +58,7 @@ function App() {
     if (activeCards.length === 2) {
       setActiveCards([index]);
     }
+
     if (!won) {
       setClicks(clicks + 1);
     }
@@ -91,6 +85,20 @@ function App() {
   }
   return (
     <div className="game">
+      <div className="gameName">
+        <h1>
+          M<br />
+          E<br />
+          M<br />
+          O<br />
+          R<br />
+          Y<br />
+          <br />
+          G<br />
+          A<br />
+          M<br />E
+        </h1>
+      </div>
       <div className="statsPane">
         <div className="stats">
           {won && (
@@ -119,6 +127,7 @@ function App() {
           <img src={statsBackground} className="statsBackroundImg" alt="..." />
         </div>
       </div>
+
       <div className="board">
         {cards.map((card, index) => {
           const flippedToFront =

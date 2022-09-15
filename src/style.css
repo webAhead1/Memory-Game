@@ -3,6 +3,7 @@ body {
   padding: 20px;
 }
 .board {
+  z-index: 3;
   margin: 100px 160px;
   width: calc(100vh - 240px);
   /* max-width: calc(100vw - 40px); */
@@ -53,7 +54,7 @@ body {
   width: 400px;
   z-index: 1;
   text-align: center;
-  color: #fff;
+  color: #00b0ad;
   padding: 20px 0;
   font-size: 2rem;
   position: absolute;
@@ -68,10 +69,21 @@ body {
   margin-top: 50px;
 }
 .statsPane {
-  margin-left: 650px;
+  margin-left: 550px;
   position: absolute;
 }
 .button {
   margin-top: 330px;
   margin-left: 210px;
+  border: none;
+}
+.game {
+  margin: 40px;
+}
+.gameName {
+  color: #00b0ad;
+}
+h1 {
+  margin-top: 100px;
+  z-index: 4;
 }
