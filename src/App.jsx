@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Images from "./images";
 import { useState, useEffect } from "react";
 import { shuffle } from "lodash";
@@ -10,15 +10,25 @@ function App() {
   const [won, setWon] = useState(false);
   const [activeCards, setActiveCards] = useState([]);
   const [foundPairs, setFoundPairs] = useState([]);
-  // const [running, setRunning] = useState(false);
+  const [running, setRunning] = useState(true);
   const [count, setCount] = useState(100);
-  var intervalId;
+  const intervalId=useRef();
 
   useEffect(() => {
-    intervalId = setInterval(() => {
-      setCount((prevCount) => (prevCount > 0 ? prevCount - 20 : prevCount));
-    }, 1000);
+    intervalId.current = setInterval(() => {
+      setCount((prevCount) => (prevCount > 0 ? prevCount -1:prevCount));
+      
+      }, 1000);  
   }, []);
+
+  useEffect(() => {
+    if(!running || count ===0){
+      clearInterval(intervalId.current);
+      console.log(intervalId.current);
+      console.log("Hello");
+    }
+  }, [running]);
+
 
   function startOver() {
     setCards(shuffle([...Images, ...Images]));
@@ -26,17 +36,19 @@ function App() {
     setWon(false);
     setClicks(0);
     setCount(60);
+    setRunning(true);
     setActiveCards([]);
+
   }
 
   if (won) {
-    // setCards(shuffle([...Images, ...Images]));
+   // setCards(shuffle([...Images, ...Images]));
     // setFoundPairs([]);
-    // setWon(false);
+    //  setWon(false);
     // setClicks(0);
-    //setRunning(false);
-    // setCount(0);
-    // showModal();
+    
+  //  setCount(0);
+    //showModal();
   }
 
   function flipCard(index) {
@@ -46,8 +58,9 @@ function App() {
       if (cards[firstIndex] === cards[secondsIndex]) {
         if (foundPairs.length + 2 === cards.length) {
           setWon(true);
-          console.log({ intervalId });
-
+          setRunning(false);
+          console.log( intervalId);
+          console.log(count);
           clearInterval(intervalId);
         }
         setFoundPairs([...foundPairs, firstIndex, secondsIndex]);
@@ -58,9 +71,9 @@ function App() {
       setActiveCards([index]);
     }
 
-    if (!won) {
-      setClicks(clicks + 1);
-    }
+    // if (!won) {
+    //   setClicks(clicks + 1);
+    // }
     if (activeCards.length === 0) {
       setActiveCards([index]);
     }
@@ -70,6 +83,7 @@ function App() {
       if (cards[firstIndex] === cards[secondsIndex]) {
         if (foundPairs.length + 2 === cards.length) {
           setWon(true);
+    
         }
         setFoundPairs([...foundPairs, firstIndex, secondsIndex]);
       }
@@ -78,7 +92,8 @@ function App() {
     if (activeCards.length === 2) {
       setActiveCards([index]);
     }
-    if (!won) {
+    if (!won && count>0) {
+      //if(!flippedToFront)
       setClicks(clicks + 1);
     }
   }
@@ -101,6 +116,9 @@ function App() {
       <div className="startButton">
           <button onClick={startOver} className='startButton-btn'>Start Over</button>
       </div>
+      {/* <div >
+          <button onClick={(e) => (setRunning(false))} className='startButton-btn'>Won</button>
+      </div> */}
       <div className="statsPane">
         <div className="stats">
           Clicks: {clicks}
@@ -134,7 +152,7 @@ function App() {
             foundPairs.indexOf(index) !== -1;
           return (
             <div
-              className={"card-outer " + (flippedToFront ? "flipped" : "")}
+              className={"card-outer " + (flippedToFront && count >0 ? "flipped" : "")}
               onClick={() => flipCard(index)}
             >
               <div className="card">
