@@ -11,7 +11,7 @@ function App() {
   const [activeCards, setActiveCards] = useState([]);
   const [foundPairs, setFoundPairs] = useState([]);
   const [running, setRunning] = useState(true);
-  const [count, setCount] = useState(60);
+  const [count, setCount] = useState(40);
   const intervalId = useRef();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function App() {
     intervalId.current = setInterval(() => {
       setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : prevCount));
       }, 1000);}
-  }, [running]);
+  }, [running]); 
 
   useEffect(() => {
     if(won || count === 0){
@@ -32,7 +32,7 @@ function App() {
     setFoundPairs([]);
     setWon(false);
     setClicks(0);
-    setCount(60);
+    setCount(40);
     setRunning(true);
     setActiveCards([]);
   }
