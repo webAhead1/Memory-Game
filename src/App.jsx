@@ -11,12 +11,12 @@ function App() {
   const [activeCards, setActiveCards] = useState([]);
   const [foundPairs, setFoundPairs] = useState([]);
   // const [running, setRunning] = useState(false);
-  const [count, setCount] = useState(100);
-  var intervalId;
+  const [count, setCount] = useState(60);
+  let intervalId;
 
   useEffect(() => {
     intervalId = setInterval(() => {
-      setCount((prevCount) => (prevCount > 0 ? prevCount - 20 : prevCount));
+      setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : prevCount));
     }, 1000);
   }, []);
 
@@ -37,6 +37,7 @@ function App() {
     //setRunning(false);
     // setCount(0);
     // showModal();
+    clearInterval(intervalId);
   }
 
   function flipCard(index) {
@@ -47,8 +48,6 @@ function App() {
         if (foundPairs.length + 2 === cards.length) {
           setWon(true);
           console.log({ intervalId });
-
-          clearInterval(intervalId);
         }
         setFoundPairs([...foundPairs, firstIndex, secondsIndex]);
       }
@@ -58,9 +57,9 @@ function App() {
       setActiveCards([index]);
     }
 
-    if (!won) {
-      setClicks(clicks + 1);
-    }
+    // if (!won) {
+    //   setClicks(clicks + 1);
+    // }
     if (activeCards.length === 0) {
       setActiveCards([index]);
     }
@@ -78,7 +77,7 @@ function App() {
     if (activeCards.length === 2) {
       setActiveCards([index]);
     }
-    if (!won) {
+    if (!won && count > 0) {
       setClicks(clicks + 1);
     }
   }
@@ -134,7 +133,7 @@ function App() {
             foundPairs.indexOf(index) !== -1;
           return (
             <div
-              className={"card-outer " + (flippedToFront ? "flipped" : "")}
+              className={"card-outer " + (flippedToFront && count > 0 ? "flipped" : "")}
               onClick={() => flipCard(index)}
             >
               <div className="card">
