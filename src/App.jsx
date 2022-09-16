@@ -99,6 +99,17 @@ function App() {
   }
   return (
     <div className="game">
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,400;1,300&display=swap"
+        rel="stylesheet"
+      ></link>
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="//fonts.googleapis.com/css?family=Irish+Grover"
+      />
       <div className="gameName">
         <h1>
           M<br />
@@ -114,7 +125,7 @@ function App() {
         </h1>
       </div>
       <div className="startButton">
-          <button onClick={startOver} className='startButton-btn'>Start Over</button>
+        <button onClick={startOver}>Start Over</button>
       </div>
       {/* <div >
           <button onClick={(e) => (setRunning(false))} className='startButton-btn'>Won</button>
@@ -133,12 +144,14 @@ function App() {
           <br />
           {won && (
             <>
-            <p>Well done! You won the game!</p>
+              <p>Well done! You won the game!</p>
             </>
           )}
-          {count === 0 && <>     
-          <p>Time ran out! you lost..</p>
-          </>}
+          {count === 0 && (
+            <>
+              <p>Time ran out! you lost..</p>
+            </>
+          )}
         </div>
         <div className="statsBackground">
           <img src={statsBackground} className="statsBackroundImg" alt="..." />
