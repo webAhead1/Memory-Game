@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Images from "./images";
 import { useState, useEffect } from "react";
 import { shuffle } from "lodash";
@@ -10,15 +10,22 @@ function App() {
   const [won, setWon] = useState(false);
   const [activeCards, setActiveCards] = useState([]);
   const [foundPairs, setFoundPairs] = useState([]);
-  // const [running, setRunning] = useState(false);
+  const [running, setRunning] = useState(true);
   const [count, setCount] = useState(60);
-  let intervalId;
+  const intervalId = useRef();
 
   useEffect(() => {
-    intervalId = setInterval(() => {
+    if (running === true) {
+    intervalId.current = setInterval(() => {
       setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : prevCount));
-    }, 1000);
-  }, []);
+      }, 1000);}
+  }, [running]);
+
+  useEffect(() => {
+    if(won || count === 0){
+      clearInterval(intervalId.current);
+    } 
+  }, [won]);
 
   function startOver() {
     setCards(shuffle([...Images, ...Images]));
@@ -26,63 +33,46 @@ function App() {
     setWon(false);
     setClicks(0);
     setCount(60);
+    setRunning(true);
     setActiveCards([]);
-  }
-
-  if (won) {
-    // setCards(shuffle([...Images, ...Images]));
-    // setFoundPairs([]);
-    // setWon(false);
-    // setClicks(0);
-    //setRunning(false);
-    // setCount(0);
-    // showModal();
-    clearInterval(intervalId);
   }
 
   function flipCard(index) {
     if (activeCards.length === 1) {
       const firstIndex = activeCards[0];
-      const secondsIndex = index;
-      if (cards[firstIndex] === cards[secondsIndex]) {
+      const secondIndex = index;
+      if (cards[firstIndex] === cards[secondIndex]) {
         if (foundPairs.length + 2 === cards.length) {
           setWon(true);
-          console.log({ intervalId });
+          setRunning(false);
         }
-        setFoundPairs([...foundPairs, firstIndex, secondsIndex]);
+        setFoundPairs([...foundPairs, firstIndex, secondIndex]);
       }
       setActiveCards([...activeCards, index]);
     }
     if (activeCards.length === 2) {
       setActiveCards([index]);
     }
-
-    // if (!won) {
-    //   setClicks(clicks + 1);
-    // }
     if (activeCards.length === 0) {
       setActiveCards([index]);
     }
-    if (activeCards.length === 1) {
-      const firstIndex = activeCards[0];
-      const secondsIndex = index;
-      if (cards[firstIndex] === cards[secondsIndex]) {
-        if (foundPairs.length + 2 === cards.length) {
-          setWon(true);
-        }
-        setFoundPairs([...foundPairs, firstIndex, secondsIndex]);
-      }
-      setActiveCards([...activeCards, index]);
-    }
-    if (activeCards.length === 2) {
-      setActiveCards([index]);
-    }
-    if (!won && count > 0) {
+    if (!won && count>0) {
       setClicks(clicks + 1);
     }
   }
   return (
     <div className="game">
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,400;1,300&display=swap"
+        rel="stylesheet"
+      ></link>
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="//fonts.googleapis.com/css?family=Irish+Grover"
+      />
       <div className="gameName">
         <h1>
           M<br />
@@ -98,9 +88,9 @@ function App() {
         </h1>
       </div>
       <div className="startButton">
-          <button onClick={startOver} className='startButton-btn'>Start Over</button>
+        <button onClick={startOver}>Start Over</button>
       </div>
-      <div className="statsPane">
+      <div className="statsPanel">
         <div className="stats">
           Clicks: {clicks}
           <br />
@@ -111,15 +101,16 @@ function App() {
           Timer: {count}
           <br />
           <br />
-          <br />
           {won && (
             <>
-            <p>Well done! You won the game!</p>
+              <p>Well done! You won the game!</p>
             </>
           )}
-          {count === 0 && <>     
-          <p>Time ran out! you lost..</p>
-          </>}
+          {count === 0 && (
+            <>
+              <p>Time ran out! you lost..</p>
+            </>
+          )}
         </div>
         <div className="statsBackground">
           <img src={statsBackground} className="statsBackroundImg" alt="..." />
@@ -133,7 +124,7 @@ function App() {
             foundPairs.indexOf(index) !== -1;
           return (
             <div
-              className={"card-outer " + (flippedToFront && count > 0 ? "flipped" : "")}
+              className={"card-outer " + (flippedToFront && count >0 ? "flipped" : "")}
               onClick={() => flipCard(index)}
             >
               <div className="card">
