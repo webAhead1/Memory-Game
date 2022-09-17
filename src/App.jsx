@@ -10,7 +10,7 @@ function App() {
   const [won, setWon] = useState(false);
   const [activeCards, setActiveCards] = useState([]);
   const [foundPairs, setFoundPairs] = useState([]);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(false);
   const [count, setCount] = useState(40);
   const intervalId = useRef();
 
@@ -27,7 +27,7 @@ function App() {
     } 
   }, [won]);
 
-  function startOver() {
+  function startGame() {
     setCards(shuffle([...Images, ...Images]));
     setFoundPairs([]);
     setWon(false);
@@ -46,6 +46,7 @@ function App() {
           setWon(true);
           setRunning(false);
         }
+        if (running && count>0)
         setFoundPairs([...foundPairs, firstIndex, secondIndex]);
       }
       setActiveCards([...activeCards, index]);
@@ -56,7 +57,7 @@ function App() {
     if (activeCards.length === 0) {
       setActiveCards([index]);
     }
-    if (!won && count>0) {
+    if (!won && running && count>0) {
       setClicks(clicks + 1);
     }
   }
@@ -88,7 +89,7 @@ function App() {
         </h1>
       </div>
       <div className="startButton">
-        <button onClick={startOver}>Start Over</button>
+        <button onClick={startGame}>Start a new game</button>
       </div>
       <div className="statsPanel">
         <div className="stats">
@@ -124,7 +125,7 @@ function App() {
             foundPairs.indexOf(index) !== -1;
           return (
             <div
-              className={"card-outer " + (flippedToFront && count >0 ? "flipped" : "")}
+              className={"card-outer " + (flippedToFront && running && count>0 ? "flipped" : "")}
               onClick={() => flipCard(index)}
             >
               <div className="card">
